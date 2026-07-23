@@ -1,3 +1,5 @@
+import glob
+
 import pandas as pd
 import plotly.express as px
 import streamlit as st
@@ -41,13 +43,26 @@ st.warning(
 
 # ----------------------------------------------------------------
 # 데이터 불러오기 (7번 페이지와 같은 연령별 CSV를 사용해요)
+#    - 파일 이름을 하드코딩하지 않고, data 폴더 안에서 이름에
+#      '연령'이 들어간 CSV를 자동으로 찾아요.
 # ----------------------------------------------------------------
 @st.cache_data
 def 데이터_불러오기():
-    df = pd.read_csv(
-        "data/시군구별_성별_연령별_주요_정신질환_통계_2024.csv",
-        encoding="cp949",
-    )
+    후보파일 = [f for f in glob.glob("data/*.csv") if "연령" in f]
+    if not 후보파일:
+        st.error(
+            "❌ data 폴더 안에서 '연령'이라는 글자가 들어간 CSV 파일을 "
+            "찾지 못했어요. 시군구·성별·연령별 통계 CSV가 data 폴더 "
+            "안에 올라가 있는지 확인해주세요."
+        )
+        st.stop()
+
+    파일경로 = 후보파일[0]
+    try:
+        df = pd.read_csv(파일경로, encoding="cp949")
+    except UnicodeDecodeError:
+        df = pd.read_csv(파일경로, encoding="utf-8")
+
     최신연도 = df["진료년도"].max()
     df = df[df["진료년도"] == 최신연도]
     df = df.rename(columns={"상별구분": "상병구분"})
