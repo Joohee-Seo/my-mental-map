@@ -122,7 +122,7 @@ if 강조_대상 is not None and len(강조_대상) > 0:
             x=강조_대상["남"],
             y=강조_대상["여"],
             mode="markers",
-            marker=dict(size=22, color="rgba(0,0,0,0)", line=dict(color="black", width=3)),
+            marker=dict(size=22, color="rgba(0,0,0,0)", line=dict(color="#39FF14", width=3)),
             name=f"⭐ {선택_시군구}",
             hoverinfo="skip",
         )
