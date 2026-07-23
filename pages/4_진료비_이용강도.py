@@ -1,4 +1,4 @@
-import pandas as pd
+     import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
@@ -134,7 +134,7 @@ if 강조_대상 is not None and len(강조_대상) > 0:
             marker=dict(
                 size=26,
                 color="rgba(0,0,0,0)",  # 안은 비워두고
-                line=dict(color="black", width=3),  # 테두리만 두껍게
+                line=dict(color="#39FF14", width=3),  # 테두리만 두껍게(형광 라임색)
             ),
             text=강조_대상["상병구분"],
             textposition="top center",
